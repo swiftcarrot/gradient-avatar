@@ -4,18 +4,20 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/wangzuo/avatar"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "image/svg+xml")
 	w.Header().Set("Cache-Control", "max-age=2592000, public")
 
-	avatar, err := GenerateSVG("wangzuo", "wz", 100, 100)
+	svg, err := avatar.GenerateSVG("wangzuo", "wz", 100, 100)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Fprint(w, avatar)
+	fmt.Fprint(w, svg)
 }
 
 func main() {

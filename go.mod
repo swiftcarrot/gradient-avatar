@@ -1,1 +1,1 @@
-module avatar
+module github.com/wangzuo/avatar
