@@ -6,6 +6,40 @@ import (
 	"math"
 )
 
+type Color struct {
+	mode   string
+	valpha int
+}
+
+func (c Color) ToString() string {
+	return ""
+}
+
+func (c Color) Alpha() {
+
+}
+
+func (c Color) Saturate() {
+
+}
+
+func (c Color) Desaturate() {
+}
+
+func (c Color) HSL() {
+
+}
+
+func (c Color) Lighten() {
+
+}
+
+func (c Color) Darken() {
+
+}
+
+func (c Color) Hex() string {}
+
 type RGB struct {
 	R, G, B float64
 }
