@@ -1,4 +1,4 @@
-package avatar // import github.com/wangzuo/avatar
+package main
 
 import (
 	"fmt"
