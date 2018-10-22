@@ -11,7 +11,7 @@ type SVGData struct {
 	Text     string
 	Width    int
 	Height   int
-	FontSize int
+	FontSize float64
 }
 
 func CreateSVG(data SVGData) (string, error) {

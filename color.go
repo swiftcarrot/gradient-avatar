@@ -80,7 +80,7 @@ func (c RGB) ToHSL() HSL {
 const delta = 1 / 512.0
 
 func (c RGB) ToHTML() string {
-	return fmt.Sprintf("%02x%02x%02x", byte((c.R+delta)*255), byte((c.G+delta)*255), byte((c.B+delta)*255))
+	return fmt.Sprintf("#%02x%02x%02x", byte((c.R+delta)*255), byte((c.G+delta)*255), byte((c.B+delta)*255))
 }
 
 func hueToRGB(v1, v2, h float64) float64 {

@@ -4,7 +4,6 @@ import (
 	"crypto/md5"
 	"fmt"
 	"io"
-	"log"
 )
 
 func generateGradient(username, text string, width, height int) (string, error) {
@@ -12,15 +11,15 @@ func generateGradient(username, text string, width, height int) (string, error) 
 	io.WriteString(h, username)
 	hash := fmt.Sprintf("%x", h.Sum(nil))
 	firstColor := hashStringToColor(hash)
-	log.Println(firstColor)
+	// log.Println(firstColor)
 	rgb, err := HTMLToRGB(firstColor)
 	if err != nil {
 		return "", err
 	}
 
-	log.Println(rgb)
+	// log.Println(rgb)
 	hsl := rgb.ToHSL()
-	log.Println(hsl)
+	// log.Println(hsl)
 
 	hsl = HSL{
 		H: hsl.H,
@@ -37,11 +36,12 @@ func generateGradient(username, text string, width, height int) (string, error) 
 	secondColor := firstColor
 
 	avatar, err := CreateSVG(SVGData{
-		First:  firstColor,
-		Second: secondColor,
-		Width:  width,
-		Height: height,
-		Text:   text,
+		First:    firstColor,
+		Second:   secondColor,
+		Width:    width,
+		Height:   height,
+		Text:     text,
+		FontSize: (float64(height) * 0.9) / float64(len(text)),
 	})
 	if err != nil {
 		return "", err
