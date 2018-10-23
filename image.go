@@ -32,7 +32,7 @@ func GenerateGradient(username, text string, width, height int) (string, error) 
 		Width:    width,
 		Height:   height,
 		Text:     text,
-		FontSize: (float64(height) * 0.9) / float64(len([]rune(text))),
+		FontSize: (float64(height) * 0.5) / float64(len([]rune(text))),
 	})
 	if err != nil {
 		return "", err
