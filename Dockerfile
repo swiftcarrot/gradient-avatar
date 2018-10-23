@@ -2,6 +2,7 @@ FROM golang:alpine as builder
 COPY . $GOPATH/src/github.com/wangzuo/avatar
 WORKDIR $GOPATH/src/github.com/wangzuo/avatar
 ENV GO111MODULE=on
+RUN apk update && apk add git
 RUN go get -d -v
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -o /go/bin/avatar cmd/avatar/main.go
 
