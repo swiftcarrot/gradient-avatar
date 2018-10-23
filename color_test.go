@@ -1,0 +1,3 @@
+package avatar
+
+import "testing"

@@ -7,8 +7,8 @@ import (
 
 func TestCreateSVG(t *testing.T) {
 	svg, err := CreateSVG(SVGData{
-		First:    "#3498db",
-		Second:   "#889912",
+		Color1:   "#3498db",
+		Color2:   "#889912",
 		Width:    30,
 		Height:   30,
 		Text:     "WZ",
