@@ -3,6 +3,8 @@ package avatar
 import (
 	"fmt"
 	"math"
+
+	"github.com/wangzuo/color"
 )
 
 func djb2(str string) int {
@@ -37,7 +39,7 @@ func hashStringToColor(str string) string {
 }
 
 func getMatchingColor(h, s, l float64) string {
-	r, g, b := HSL2RGB(h, s, l)
+	r, g, b := color.HSL2RGB(h, s, l)
 	yiq := (r*299 + g*587 + b*114) / 1000
 
 	if yiq < 128 {
@@ -51,7 +53,7 @@ func getMatchingColor(h, s, l float64) string {
 		h = 360 + h
 	}
 
-	r, g, b = HSL2RGB(h, s, l)
+	r, g, b = color.HSL2RGB(h, s, l)
 	if shouldChangeColor(r, g, b) {
 		h = math.Mod((h - 200), 360)
 		if h < 0 {
@@ -61,5 +63,5 @@ func getMatchingColor(h, s, l float64) string {
 		s = s + s*0.5
 	}
 
-	return HSL2Hex(h, s, l)
+	return color.HSL2Hex(h, s, l)
 }

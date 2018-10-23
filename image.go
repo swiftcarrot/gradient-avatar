@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"log"
+
+	"github.com/wangzuo/color"
 )
 
 func GenerateGradient(username, text string, width, height int) (string, error) {
@@ -16,7 +18,7 @@ func GenerateGradient(username, text string, width, height int) (string, error) 
 
 	log.Println("color1", color1)
 
-	h, s, l := Hex2HSL(color1)
+	h, s, l := color.Hex2HSL(color1)
 
 	log.Println("hsl", h, s, l)
 
@@ -32,7 +34,7 @@ func GenerateGradient(username, text string, width, height int) (string, error) 
 
 	log.Println("hsl", h, s, l)
 
-	color1 = HSL2Hex(h, s, l)
+	color1 = color.HSL2Hex(h, s, l)
 	color2 := getMatchingColor(h, s, l)
 
 	log.Println(color1, color2)

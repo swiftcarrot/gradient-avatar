@@ -1,7 +1,7 @@
 package avatar
 
 import (
-	"log"
+	"fmt"
 	"testing"
 )
 
@@ -11,5 +11,5 @@ func TestGenerateGradient(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	log.Println(avatar)
+	fmt.Println(avatar)
 }
