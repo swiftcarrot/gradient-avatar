@@ -104,7 +104,7 @@ func HSV2RGB(h, s, v float64) (float64, float64, float64) {
 		rgb = []float64{c, 0, x}
 	}
 
-	return math.Round(255 * (rgb[0] + m)), math.Round(255 * (rgb[0] + m)), math.Round(255 * (rgb[0] + m))
+	return math.Round(255 * (rgb[0] + m)), math.Round(255 * (rgb[1] + m)), math.Round(255 * (rgb[2] + m))
 }
 
 func HSV2Hex(h, s, v float64) string {
