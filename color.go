@@ -56,7 +56,7 @@ func HSL2HSV(h, s, l float64) (float64, float64, float64) {
 	} else {
 		s = s * (100 - l) / 100
 	}
-	return h, s, l + s
+	return h, ((2 * s) / (l + s)) * 100, l + s
 }
 
 func HSV2HSL(h, s, v float64) (float64, float64, float64) {
@@ -120,5 +120,6 @@ func HSL2Hex(h, s, l float64) string {
 func HSL2RGB(h, s, l float64) (float64, float64, float64) {
 	h, s, v := HSL2HSV(h, s, l)
 	r, g, b := HSV2RGB(h, s, v)
+
 	return r, g, b
 }
