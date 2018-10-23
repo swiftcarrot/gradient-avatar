@@ -7,37 +7,29 @@ import (
 )
 
 func generateGradient(username, text string, width, height int) (string, error) {
-	h := md5.New()
-	io.WriteString(h, username)
-	hash := fmt.Sprintf("%x", h.Sum(nil))
-	firstColor := hashStringToColor(hash)
-	// log.Println(firstColor)
-	rgb, err := HTMLToRGB(firstColor)
-	if err != nil {
-		return "", err
+	hasher := md5.New()
+	io.WriteString(hasher, username)
+	hash := fmt.Sprintf("%x", hasher.Sum(nil))
+
+	color1 := hashStringToColor(hash)
+	h, s, l := Hex2HSL(color1)
+
+	s = s + s*0.5
+
+	if l < 25 {
+		l = l + l*3
+	} else if l > 25 && l < 40 {
+		l = l + l*0.8
+	} else if l > 75 {
+		l = l - l*0.4
 	}
 
-	// log.Println(rgb)
-	hsl := rgb.ToHSL()
-	// log.Println(hsl)
-
-	hsl = HSL{
-		H: hsl.H,
-		S: hsl.S * 0.5,
-		L: hsl.L,
-	}
-
-	if hsl.L < 25 {
-	} else if hsl.L > 25 && hsl.L < 40 {
-	} else if hsl.L > 75 {
-	}
-
-	firstColor = hsl.ToHTML()
-	secondColor := firstColor
+	color1 = HSL2Hex(h, s, l)
+	color2 := getMatchingColor(h, s, l)
 
 	avatar, err := CreateSVG(SVGData{
-		First:    firstColor,
-		Second:   secondColor,
+		Color1:   color1,
+		Color2:   color2,
 		Width:    width,
 		Height:   height,
 		Text:     text,

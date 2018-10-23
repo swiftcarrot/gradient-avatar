@@ -1,166 +1,124 @@
 package avatar
 
 import (
-	"errors"
 	"fmt"
 	"math"
 )
 
-type Color struct {
-	mode   string
-	valpha int
-}
-
-func (c Color) ToString() string {
-	return ""
-}
-
-func (c Color) Alpha() {
-
-}
-
-func (c Color) Saturate() {
-
-}
-
-func (c Color) Desaturate() {
-}
-
-func (c Color) HSL() {
-
-}
-
-func (c Color) Lighten() {
-
-}
-
-func (c Color) Darken() {
-
-}
-
-func (c Color) Hex() string {}
-
-type RGB struct {
-	R, G, B float64
-}
-
-type HSL struct {
-	H, S, L float64
-}
-
-func HTMLToRGB(in string) (RGB, error) {
-	if in[0] == '#' {
-		in = in[1:]
-	}
-
-	if len(in) != 6 {
-		return RGB{}, errors.New("Invalid string length")
-	}
-
+func Hex2RGB(hex string) (float64, float64, float64) {
 	var r, g, b byte
-	if n, err := fmt.Sscanf(in, "%2x%2x%2x", &r, &g, &b); err != nil || n != 3 {
-		return RGB{}, err
-	}
-
-	return RGB{float64(r) / 255, float64(g) / 255, float64(b) / 255}, nil
+	fmt.Sscanf(hex, "#%2x%2x%2x", &r, &g, &b)
+	return float64(r), float64(g), float64(b)
 }
 
-func (c RGB) ToHSL() HSL {
-	var h, s, l float64
+func Hex2HSL(hex string) (float64, float64, float64) {
+	r, g, b := Hex2RGB(hex)
+	h, s, v := RGB2HSV(r, g, b)
+	h, s, l := HSV2HSL(h, s, v)
+	return h, s, l
+}
 
-	r := c.R
-	g := c.G
-	b := c.B
-
+func RGB2HSV(r, g, b float64) (float64, float64, float64) {
+	var h, s, v float64
 	max := math.Max(math.Max(r, g), b)
 	min := math.Min(math.Min(r, g), b)
-
-	l = (max + min) / 2
-
 	delta := max - min
+
 	if delta == 0 {
-
-		return HSL{0, 0, l}
-	}
-
-	if l < 0.5 {
-		s = delta / (max + min)
+		h = 0
+	} else if r == max {
+		h = math.Mod((g-b)/delta, 6.0)
+	} else if g == max {
+		h = (b-r)/delta + 2
 	} else {
-		s = delta / (2 - max - min)
+		h = (r-g)/delta + 4
 	}
 
-	r2 := (((max - r) / 6) + (delta / 2)) / delta
-	g2 := (((max - g) / 6) + (delta / 2)) / delta
-	b2 := (((max - b) / 6) + (delta / 2)) / delta
-	switch {
-	case r == max:
-		h = b2 - g2
-	case g == max:
-		h = (1.0 / 3.0) + r2 - b2
-	case b == max:
-		h = (2.0 / 3.0) + g2 - r2
-	}
-
-	switch {
-	case h < 0:
-		h += 1
-	case h > 1:
-		h -= 1
-	}
-
-	return HSL{h, s, l}
-}
-
-const delta = 1 / 512.0
-
-func (c RGB) ToHTML() string {
-	return fmt.Sprintf("#%02x%02x%02x", byte((c.R+delta)*255), byte((c.G+delta)*255), byte((c.B+delta)*255))
-}
-
-func hueToRGB(v1, v2, h float64) float64 {
+	h = math.Round(h * 60)
 	if h < 0 {
-		h += 1
-	}
-	if h > 1 {
-		h -= 1
-	}
-	switch {
-	case 6*h < 1:
-		return (v1 + (v2-v1)*6*h)
-	case 2*h < 1:
-		return v2
-	case 3*h < 2:
-		return v1 + (v2-v1)*((2.0/3.0)-h)*6
-	}
-	return v1
-}
-
-func (c HSL) ToRGB() RGB {
-	h := c.H
-	s := c.S
-	l := c.L
-
-	if s == 0 {
-
-		return RGB{l, l, l}
+		h += 360
 	}
 
-	var v1, v2 float64
-	if l < 0.5 {
-		v2 = l * (1 + s)
+	if max == 0 {
+		s = 0
 	} else {
-		v2 = (l + s) - (s * l)
+		s = math.Round((delta / max) * 100)
 	}
 
-	v1 = 2*l - v2
+	v = math.Round((max / 255) * 100)
 
-	r := hueToRGB(v1, v2, h+(1.0/3.0))
-	g := hueToRGB(v1, v2, h)
-	b := hueToRGB(v1, v2, h-(1.0/3.0))
-
-	return RGB{r, g, b}
+	return h, s, v
 }
 
-func (c HSL) ToHTML() string {
-	return c.ToRGB().ToHTML()
+func HSL2HSV(h, s, l float64) (float64, float64, float64) {
+	if l < 50 {
+		s = s * l / 100
+	} else {
+		s = s * (100 - l) / 100
+	}
+	return h, s, l + s
+}
+
+func HSV2HSL(h, s, v float64) (float64, float64, float64) {
+	hh := ((200 - s) * v) / 100
+
+	if hh < 100 {
+		s = (s * v) / hh
+	} else {
+		s = (s * v) / (200 - hh)
+	}
+	l := hh / 2
+	return h, s, l
+}
+
+func RGB2Hex(r, g, b float64) string {
+	return fmt.Sprintf("#%02x%02x%02x", byte(r), byte(g), byte(b))
+}
+
+func HSV2RGB(h, s, v float64) (float64, float64, float64) {
+	s = s / 100
+	v = v / 100
+	rgb := []float64{}
+
+	c := v * s
+	hh := h / 60
+	x := c * (1 - math.Abs(math.Mod(hh, 2)-1))
+	m := v - c
+
+	switch int(hh) {
+	case 0:
+		rgb = []float64{c, x, 0}
+
+	case 1:
+		rgb = []float64{x, c, 0}
+	case 2:
+		rgb = []float64{0, c, x}
+
+	case 3:
+		rgb = []float64{0, x, c}
+
+	case 4:
+		rgb = []float64{x, 0, c}
+
+	case 5:
+		rgb = []float64{c, 0, x}
+	}
+
+	return math.Round(255 * (rgb[0] + m)), math.Round(255 * (rgb[0] + m)), math.Round(255 * (rgb[0] + m))
+}
+
+func HSV2Hex(h, s, v float64) string {
+	r, g, b := HSV2RGB(h, s, v)
+	return RGB2Hex(r, g, b)
+}
+
+func HSL2Hex(h, s, l float64) string {
+	h, s, v := HSL2HSV(h, s, l)
+	return HSV2Hex(h, s, v)
+}
+
+func HSL2RGB(h, s, l float64) (float64, float64, float64) {
+	h, s, v := HSL2HSV(h, s, l)
+	r, g, b := HSV2RGB(h, s, v)
+	return r, g, b
 }

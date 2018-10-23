@@ -12,7 +12,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "image/svg+xml")
 	w.Header().Set("Cache-Control", "max-age=2592000, public")
 
-	svg, err := avatar.GenerateSVG("wangzuo", "wz", 100, 100)
+	svg, err := avatar.GenerateSVG("helloworld", "wz", 100, 100)
 	if err != nil {
 		log.Fatal(err)
 	}

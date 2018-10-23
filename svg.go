@@ -6,8 +6,8 @@ import (
 )
 
 type SVGData struct {
-	First    string
-	Second   string
+	Color1   string
+	Color2   string
 	Text     string
 	Width    int
 	Height   int
@@ -21,8 +21,8 @@ func CreateSVG(data SVGData) (string, error) {
   <g>
     <defs>
       <linearGradient id="avatar" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="{{.First}}"/>
-        <stop offset="100%" stop-color="{{.Second}}"/>
+        <stop offset="0%" stop-color="{{.Color1}}"/>
+        <stop offset="100%" stop-color="{{.Color2}}"/>
       </linearGradient>
     </defs>
     <rect fill="url(#avatar)" x="0" y="0" width="{{.Width}}" height="{{.Height}}"/>

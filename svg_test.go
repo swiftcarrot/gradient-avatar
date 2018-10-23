@@ -14,7 +14,6 @@ func TestCreateSVG(t *testing.T) {
 		Text:     "WZ",
 		FontSize: 20,
 	})
-
 	if err != nil {
 		t.Fatal(err)
 	}
