@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: avatar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: avatar
+  template:
+    metadata:
+      labels:
+        app: avatar
+    spec:
+      containers:
+      - name: avatar
+        image: wangzuo/avatar:${TAG}
+        ports:
+          - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: avatar
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+    name: http
+  selector:
+    app: avatar
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: avatar
+spec:
+  rules:
+    - host: avatar.swiftcarrot.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: avatar
+              servicePort: 80
