@@ -13,10 +13,10 @@ spec:
         app: avatar
     spec:
       containers:
-      - name: avatar
-        image: wangzuo/avatar:${TAG}
-        ports:
-          - containerPort: 8080
+        - name: avatar
+          image: wangzuo/avatar:${TAG}
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -24,10 +24,10 @@ metadata:
   name: avatar
 spec:
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 8080
-    name: http
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      name: http
   selector:
     app: avatar
 ---
@@ -35,8 +35,9 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: avatar
-  ingress.kubernetes.io/ssl-redirect: 'true'
-  certmanager.k8s.io/issuer: letsencrypt-prod
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: 'true'
+    certmanager.k8s.io/issuer: letsencrypt-prod
 spec:
   tls:
     - hosts:
