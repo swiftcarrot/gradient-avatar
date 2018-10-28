@@ -35,7 +35,13 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: avatar
+  ingress.kubernetes.io/ssl-redirect: 'true'
+  certmanager.k8s.io/issuer: letsencrypt-prod
 spec:
+  tls:
+    - hosts:
+        - avatar.swiftcarrot.com
+      secretName: avatar-swiftcarrot-com-tls
   rules:
     - host: avatar.swiftcarrot.com
       http:
