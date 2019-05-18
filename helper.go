@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/wangzuo/color"
+	"github.com/swiftcarrot/color"
 )
 
 func djb2(str string) int {

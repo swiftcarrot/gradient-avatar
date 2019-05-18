@@ -1,6 +1,6 @@
 FROM golang:alpine as builder
-COPY . $GOPATH/src/github.com/wangzuo/avatar
-WORKDIR $GOPATH/src/github.com/wangzuo/avatar
+COPY . $GOPATH/src/github.com/swiftcarrot/avatar
+WORKDIR $GOPATH/src/github.com/swiftcarrot/avatar
 ENV GO111MODULE=on
 RUN apk update && apk add git
 RUN go get -d -v

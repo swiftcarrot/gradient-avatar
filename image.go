@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/wangzuo/color"
+	"github.com/swiftcarrot/color"
 )
 
 func GenerateGradient(username, text string, width, height int) (string, error) {

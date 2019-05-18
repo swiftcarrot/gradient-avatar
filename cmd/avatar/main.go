@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/wangzuo/avatar"
+	"github.com/swiftcarrot/avatar"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
