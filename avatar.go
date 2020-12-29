@@ -1,31 +1,28 @@
 package avatar
 
 import (
-	"crypto/md5"
 	"fmt"
-	"io"
+	"log"
 
 	"github.com/swiftcarrot/color"
 )
 
-func GenerateGradient(username, text string, width, height int) (string, error) {
-	hasher := md5.New()
-	io.WriteString(hasher, username)
-	hash := fmt.Sprintf("%x", hasher.Sum(nil))
-	color1 := hashStringToColor(hash)
-	h, s, l := color.Hex2HSL(color1)
+func GenerateGradient(str, text string, width, height int) (string, error) {
+	hash := StringHash(str)
 
-	s = s + s*0.5
-	if l < 25 {
-		l = l + l*3
-	} else if l > 25 && l < 40 {
-		l = l + l*0.8
-	} else if l > 75 {
-		l = l - l*0.4
-	}
+	log.Println(hash)
 
-	color1 = color.HSL2Hex(h, s, l)
-	color2 := getMatchingColor(h, s, l)
+	r1, g1, b1 := color.HSL2RGB(float64(hash%360), 100, 50)
+	r2, g2, b2 := color.HSL2RGB(float64((hash+120)%360), 100, 50)
+
+	log.Println(r1, g1, b1)
+	log.Println(r2, g2, b2)
+
+	color1 := fmt.Sprintf("rgb(%.1f,%.1f,%.1f)", r1, g1, b1)
+	color2 := fmt.Sprintf("rgb(%.1f,%.1f,%.1f)", r2, g2, b2)
+
+	log.Println(color1, color2)
+
 	avatar, err := CreateSVG(SVGData{
 		Color1:   color1,
 		Color2:   color2,

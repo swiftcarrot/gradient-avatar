@@ -1,12 +1,11 @@
 package avatar
 
 import (
-	"fmt"
 	"testing"
 )
 
 func TestCreateSVG(t *testing.T) {
-	svg, err := CreateSVG(SVGData{
+	_, err := CreateSVG(SVGData{
 		Color1:   "#3498db",
 		Color2:   "#889912",
 		Width:    30,
@@ -17,6 +16,4 @@ func TestCreateSVG(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	fmt.Println(svg)
 }
