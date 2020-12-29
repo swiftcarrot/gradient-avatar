@@ -26,7 +26,7 @@ func CreateSVG(data SVGData) (string, error) {
       </linearGradient>
     </defs>
     <rect fill="url(#avatar)" x="0" y="0" width="{{.Width}}" height="{{.Height}}"/>
-    <text x="50%" y="50%" alignment-baseline="central" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-family="sans-serif" font-size="{{.FontSize}}">{{.Text}}</text>
+    {{if .Text}}<text x="50%" y="50%" alignment-baseline="central" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-family="sans-serif" font-size="{{.FontSize}}">{{.Text}}</text>{{ end }}
   </g>
 </svg>
 `))
