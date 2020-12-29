@@ -1,8 +1,8 @@
-# avatar
+# gradient-avatar
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/swiftcarrot/avatar.svg)](https://pkg.go.dev/github.com/swiftcarrot/avatar)
+[![Go Reference](https://pkg.go.dev/badge/github.com/swiftcarrot/gradient-avatar.svg)](https://pkg.go.dev/github.com/swiftcarrot/gradient-avatar)
 
-Default avatar generation
+Default gradient avatar generation
 
 ## License
 

@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/swiftcarrot/avatar"
+	"github.com/swiftcarrot/gradient-avatar"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
