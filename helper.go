@@ -15,11 +15,6 @@ func djb2(str string) int {
 	return hash
 }
 
-func shouldChangeColor(r, g, b float64) bool {
-	val := 765 - (r + g + b)
-	return val < 250 || val > 700
-}
-
 func hashStringToColor(str string) string {
 	hash := djb2(str)
 
@@ -36,6 +31,11 @@ func hashStringToColor(str string) string {
 	b = b[len(b)-2:]
 
 	return fmt.Sprintf("#%s%s%s", r, g, b)
+}
+
+func shouldChangeColor(r, g, b float64) bool {
+	val := 765 - (r + g + b)
+	return val < 250 || val > 700
 }
 
 func getMatchingColor(h, s, l float64) string {

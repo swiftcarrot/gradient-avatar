@@ -8,16 +8,16 @@ import (
 	"github.com/swiftcarrot/color"
 )
 
-func GenerateGradient(username, text string, width, height int) (string, error) {
+func GenerateGradient(str, text string, width, height int) (string, error) {
 	hasher := md5.New()
-	io.WriteString(hasher, username)
+	io.WriteString(hasher, str)
 	hash := fmt.Sprintf("%x", hasher.Sum(nil))
 	color1 := hashStringToColor(hash)
 	h, s, l := color.Hex2HSL(color1)
 
 	s = s + s*0.5
 	if l < 25 {
-		l = l + l*3
+		l = l + l*2.5
 	} else if l > 25 && l < 40 {
 		l = l + l*0.8
 	} else if l > 75 {
@@ -26,6 +26,7 @@ func GenerateGradient(username, text string, width, height int) (string, error) 
 
 	color1 = color.HSL2Hex(h, s, l)
 	color2 := getMatchingColor(h, s, l)
+
 	avatar, err := CreateSVG(SVGData{
 		Color1:   color1,
 		Color2:   color2,
@@ -40,8 +41,8 @@ func GenerateGradient(username, text string, width, height int) (string, error) 
 	return avatar, nil
 }
 
-func GenerateSVG(username, text string, width, height int) (string, error) {
-	avatar, err := GenerateGradient(username, text, width, height)
+func GenerateSVG(str, text string, width, height int) (string, error) {
+	avatar, err := GenerateGradient(str, text, width, height)
 	if err != nil {
 		return "", err
 	}
