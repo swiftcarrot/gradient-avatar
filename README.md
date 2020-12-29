@@ -1,5 +1,9 @@
 # avatar
 
-[![go-doc](https://godoc.org/github.com/swiftcarrot/avatar?status.svg)](https://pkg.go.dev/github.com/swiftcarrot/avatar)
+[![Go Reference](https://pkg.go.dev/badge/swiftcarrot/avatar.svg)](https://pkg.go.dev/swiftcarrot/avatar)
 
 Default avatar generation
+
+## License
+
+MIT
